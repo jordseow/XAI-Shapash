@@ -16,7 +16,7 @@ Please take note that the your model should be saved as a pickle file and the da
 
 We have identified a shortcoming of using advanced machine learning models – interpretability. The predictive model that we have built involves predicting recidivism and it is especially important to understand how a specific prediction of an inmate is being made. In the field of criminology, many researchers have described AI as “narrow” as it can be used as a tool to accomplish goals, but it is not aligned with interests of the persons they affect. To tackle the opacity of explanations behind every conclusion, a lot of effort is diverted to XAI which will be a requirement for using AI in criminology. 
 
-## Instructions
+## Instructions (For creation of new explainer)
 
 ### Choose model pickle file:
 
@@ -48,3 +48,29 @@ The parameters for `compare_local()` function are:
 * xpl - SmartExplainer object that is declared earlier
 * index_list - a list of indices (of instances) to analyse
 * max_features - maximum number of features to display (default = 10)
+
+## Instructions (for deployment of existing explainer)
+
+### Switch SmartExplainer to SmartPredictor in Production:
+
+We want to get a lighter version of a SmartExplainer for us to see the summary of contributions on new ingested data. This is done by converting the SmartExplainer to SmartPredictor object and save it as a pickle file.
+
+Input the name of the SmartPredictor pickle file when prompted.
+
+### Loading SmartPredictor Pickle File:
+
+Pick the SmartPredictor pickle file when the file dialog pop-up appears.
+
+### Add Data for Analysis
+
+Newly ingested data should come in 2 parts: 
+* `X_df` - Features of the dataset
+* `y_df` - Prediction made from the dataset
+
+`X_df` and `y_df` will be used as the `add_input` parameters for the loaded SmartPredictor object.
+
+### Get summary of the 3 most contributive features of the new dataset
+
+The default number of top features to display would be 3. This number can be modified in the parameter of `modify_mask` under the `max_contrib` parameter. 
+
+After `summarize()` function is ran, the explanation object can be viewed to look at the top 3 feature contributions for the `X_df` data. 
